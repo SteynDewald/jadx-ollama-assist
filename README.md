@@ -2,50 +2,95 @@
 
 A Jadx GUI plugin that connects decompiled code with a local Ollama model for assisted reverse engineering, code analysis, and Kotlin integration guidance.
 
-## What this repository contains
+## Features
 
-- A Jadx plugin implementation in Java
-- A Swing-based UI for asking the Ollama model questions about decompiled code
-- A settings dialog for endpoint, model, and temperature
-- Support for contextual code analysis and custom prompts
+- Right-click decompiled code in Jadx and choose `Analyze with Ollama`
+- Interactive assistant panel for custom prompts and mode-based analysis
+- Built-in guidance for code review, deobfuscation, and Kotlin integration
+- Configurable Ollama endpoint, model, and temperature
+- Project-wide analysis support for broader architectural insights
 
-## Build
+## Installation
 
-Build the plugin JAR from the repository root:
+1. Build the plugin JAR from the project root:
 
 ```powershell
 ./gradlew jar
 ```
 
-Then copy the generated artifact from `build/libs/` into your Jadx `plugins` folder.
+2. Copy the generated JAR file from `build/libs/` into the Jadx `plugins` directory.
 
-## Quick start
+3. Run Jadx GUI using Java 11 or newer. The plugin depends on Jadx Core and requires a Java 11 runtime.
 
-1. Start Jadx GUI with Java 11 or newer.
-2. Make sure your local Ollama service is running.
-3. Right-click a decompiled node in Jadx and choose `Analyze with Ollama`.
-4. Use the analysis panel to provide custom questions or select a built-in mode.
+## Usage
 
-## Plugin behavior
+1. Open Jadx GUI and load an APK or DEX bundle.
+2. Right-click a decompiled class or method node.
+3. Select `Analyze with Ollama`.
+4. Use the panel to choose a mode and enter a custom question.
 
-- `Analyze with Ollama` opens a panel containing the selected decompiled code context.
-- The dialog sends a prompt to the local Ollama API.
-- You can customize the prompt with direct instructions like:
-  - `How can I use this in a Kotlin Android app?`
-  - `Generate an example Kotlin integration.`
+### Prompt examples
 
-## Settings
+- `How can I use this in a Kotlin Android app?`
+- `Generate a Kotlin example for this API flow.`
+- `Explain what this class does and call out any security risks.`
+- `Suggest integration points for this code in a larger Android project.`
 
-The plugin adds an `Ollama Settings` menu item in Jadx.
+## Supported modes
 
-Settings stored in `~/.ollama/ollama.toml` include:
+- `Custom Prompt Only (No preset focus)` — your text is the primary instruction.
+- `Advanced AI De-obfuscation` — rewrite decompiled code into readable form.
+- `General RE & Malware check` — identify suspicious behavior and logic.
+- `Project-wide review / Kotlin example` — produce broader architecture and Kotlin guidance.
+- `Data Exfiltration`, `Permission Abuse`, `Suspicious API Flows` — focus on security risks.
 
-- `endpoint` — the Ollama service URL
-- `model` — the model name to use
-- `temperature` — the model sampling temperature
+## Configuration
+
+Use the `Ollama Settings` menu item in Jadx to update:
+
+- `Endpoint URL` — usually `http://localhost:11434`
+- `Model Name` — e.g. `deepseek-coder:6.7b`
+- `Temperature` — lower values are more deterministic
+
+Configuration is saved in `~/.ollama/ollama.toml`.
+
+## Development
+
+- Build: `./gradlew jar`
+- Tests: `./gradlew test`
+
+## Release
+
+This repository includes a `v1.0` release tag for the initial production-quality plugin artifact.
+
+## Authors
+
+- Dewald Steyn <djsteyn@gmail.com>
+
+> If you have a GitHub handle, add it here as `@your-handle` for author attribution.
+
+## License
+
+This project is published under the MIT License. See `LICENSE` for full terms.
+
+## GitHub publishing guidance
+
+- Create a public repository on GitHub and push the current branches.
+- Use repository topics such as: `jadx`, `jadx-gui`, `plugin`, `ollama`, `ai`, `reverse-engineering`, `deobfuscation`, `kotlin`, `android`.
+- Enable Discussions in repository settings if you want blog-like conversations and community discussion.
+- Use Issues for bug reports and feature requests; the repository includes issue templates in `.github/ISSUE_TEMPLATE/`.
+- Forking is allowed by default for public repositories.
+- Create a release `v1.0.0` and publish release notes from `RELEASE_NOTES.md`.
+
+## Legal disclaimer
+
+- This project is not affiliated with or endorsed by Jadx or Jadx GUI. Jadx and Jadx GUI are independent open-source projects.
+- Use this plugin only for lawful reverse engineering, security research, and developer productivity.
+- Do not use this tool to enable piracy, unauthorized access, or illegal distribution of software.
+- No warranty is provided; see the MIT License for details.
 
 ## Notes
 
-- This plugin requires Java 11 at runtime due to the Jadx core dependency.
-- Use clear, task-oriented prompts for best results.
-- Documentation and testing are separated into dedicated branches to keep the repository organized.
+- The plugin requires Java 11 at runtime because of the Jadx core dependency.
+- Use explicit Kotlin or Android prompts for the best assistant output.
+- Keep the local Ollama service running while using the plugin.
