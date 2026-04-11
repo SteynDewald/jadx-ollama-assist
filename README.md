@@ -49,11 +49,14 @@ A Jadx GUI plugin that connects decompiled code with a local Ollama model for as
 
 ## Configuration
 
-Use the `Ollama Settings` menu item in Jadx to update:
+After installing the plugin, open Jadx GUI and select the `Ollama Settings` menu item.
+This brings up the plugin configuration screen so you can set the local Ollama endpoint, choose a model, and adjust response temperature.
 
 - `Endpoint URL` — usually `http://localhost:11434`
 - `Model Name` — e.g. `deepseek-coder:6.7b`
 - `Temperature` — lower values are more deterministic
+
+If the `Ollama Settings` menu item does not appear immediately, restart Jadx after copying the JAR into the `plugins` directory.
 
 Configuration is saved in `~/.ollama/ollama.toml`.
 
