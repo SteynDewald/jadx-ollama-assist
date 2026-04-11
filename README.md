@@ -71,9 +71,9 @@ This repository includes a `v1.0` release tag for the initial production-quality
 
 ## Authors
 
-- Dewald Steyn <djsteyn@gmail.com>
+- Dewald Steyn <djsteyn@gmail.com> — `@SteynDewald`
 
-> If you have a GitHub handle, add it here as `@your-handle` for author attribution.
+> Your GitHub handle is the name shown on your profile. For this project, use `@SteynDewald` for author attribution.
 
 ## License
 
