@@ -22,6 +22,9 @@ A Jadx GUI plugin that connects decompiled code with a local Ollama model for as
 
 3. Run Jadx GUI using Java 11 or newer. The plugin depends on Jadx Core and requires a Java 11 runtime.
 
+4. After installation, open Jadx GUI and use the `Ollama Settings` menu entry to configure the plugin.
+   The configuration screen lets you set the Ollama endpoint, model name, and temperature.
+
 ## Usage
 
 1. Open Jadx GUI and load an APK or DEX bundle.
@@ -77,6 +80,7 @@ This project is published under the MIT License. See `LICENSE` for full terms.
 
 - Create a public repository on GitHub and push the current branches.
 - Use repository topics such as: `jadx`, `jadx-gui`, `plugin`, `ollama`, `ai`, `reverse-engineering`, `deobfuscation`, `kotlin`, `android`.
+- Link to the Ollama project at https://ollama.ai for setup and model guidance.
 - Enable Discussions in repository settings if you want blog-like conversations and community discussion.
 - Use Issues for bug reports and feature requests; the repository includes issue templates in `.github/ISSUE_TEMPLATE/`.
 - Forking is allowed by default for public repositories.
