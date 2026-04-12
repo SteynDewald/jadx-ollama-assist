@@ -35,5 +35,5 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 [plugins]
 # Only if you later split builds or publish
 java-library = { id = "java-library" }
-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 maven-publish = { id = "maven-publish" }
