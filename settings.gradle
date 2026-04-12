@@ -1,16 +1,16 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal() // Required for the Shadow plugin
-        mavenCentral()
         google()
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        mavenCentral()
         google()
+        mavenCentral()
+        // Add custom repositories here
     }
 }
 
