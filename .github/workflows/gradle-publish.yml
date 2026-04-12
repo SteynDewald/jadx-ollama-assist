@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4 
       with:
         fetch-depth: 0
 
@@ -33,7 +33,7 @@ jobs:
       uses: gradle/actions/setup-gradle@v4
 
     - name: Build, Test and Docs
-      run: ./gradlew test javadoc shadowJar
+      run: ./gradlew test javadoc shadowJar --stacktrace
 
     # --- DEPLOY JAVADOCS TO GITHUB PAGES ---
     - name: Upload Pages Artifact
