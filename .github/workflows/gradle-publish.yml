@@ -5,40 +5,65 @@
 # This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
 
-name: Gradle Package
+name: CI, Publish, and Pre-Release
 
 on:
-  release:
-    types: [created]
+  push:
+    branches: [ "main" ]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up JDK 11
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '11'
         distribution: 'temurin'
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+      uses: gradle/actions/setup-gradle@v4
 
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Run Tests and Generate Docs
+      # This runs your tests and builds the JavaDoc
+      run: ./gradlew test javadoc
 
-    # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
-    # the publishing section of your build.gradle
-    - name: Publish to GitHub Packages
+    - name: Extract Project Version
+      # Pulls the version from gradle.properties for tagging
+      run: |
+        VERSION=$(./gradlew properties | grep ^version: | awk '{print $2}')
+        echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Build Fat Jar and Publish
+      # This publishes to GitHub Packages
       run: ./gradlew publish
       env:
-        USERNAME: ${{ github.actor }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ env.PROJECT_VERSION }}
+        name: "Release v${{ env.PROJECT_VERSION }}"
+        body: |
+          ## What's Changed
+          Automated build for version ${{ env.PROJECT_VERSION }}.
+          
+          **Note:** This is a pre-release build.
+        draft: false
+        prerelease: true
+        # This attaches the Fat Jar and JavaDoc Jar to the release page
+        files: |
+          build/libs/*-all.jar
+          build/libs/*-javadoc.jar
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
