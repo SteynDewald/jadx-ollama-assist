@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.maven.publish)
     id 'java'
     id 'jacoco'
+    alias(libs.plugins.maven.publish) // Added for publishing
 }
 
 // Versioning pulled from gradle.properties

@@ -1,0 +1,19 @@
+# --- Performance & Build Settings ---
+# Increase heap size for JADX processing (4GB recommended)
+org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=1G -XX:+UseParallelGC
+
+# Enable caching and parallel builds to speed up the CI/CD
+org.gradle.caching=true
+org.gradle.parallel=true
+org.gradle.configuration-cache=true
+
+# --- Project Versioning ---
+# This is where you specify the version for your workflow to pick up
+projectVersion=1.5.1
+group=des.ts.jadx.ollama
+
+# --- Publication Settings (Match these to your workflow env) ---
+# These are internal references for your build.gradle
+# shouldnot be specified here prefer environmental vars
+gpr.user=
+gpr.key=

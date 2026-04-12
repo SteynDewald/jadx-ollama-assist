@@ -2,6 +2,8 @@
 # Java toolchain
 java = "11"
 
+# Fat jar
+shadow = "8.3.0"
 
 # Jadx
 jadx = "1.5.0"
@@ -9,25 +11,29 @@ jadx = "1.5.0"
 # Optional utilities (only add if really needed)
 slf4j = "2.0.13"
 
-    # TOML parser (very small, no transitive junk)
-    tomlj = "1.1.1"
+# TOML parser (very small, no transitive junk)
+tomlj = "1.1.1"
 
-    junit = "5.11.0"
-    junit-platform = "1.11.0"
+# testing framework 
+junit = "5.11.0"
+junit-platform = "1.11.0"
 
-    [libraries]
-    # jadx APIs (compileOnly!)
-    jadx-core = { module = "io.github.skylot:jadx-core", version.ref = "jadx" }
-    jadx-gui = { module = "io.github.skylot:jadx-plugins-api", version.ref = "jadx" }
-    tomlj = { module = "org.tomlj:tomlj", version.ref = "tomlj" }
+[libraries]
+# jadx APIs (compileOnly!)
+jadx-core = { module = "io.github.skylot:jadx-core", version.ref = "jadx" }
+jadx-gui = { module = "io.github.skylot:jadx-plugins-api", version.ref = "jadx" }
+tomlj = { module = "org.tomlj:tomlj", version.ref = "tomlj" }
 
-    # Optional logging (usually not needed for plugins)
-    slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+# Optional logging (usually not needed for plugins)
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 
-    junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
-    junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
-    junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+# testing framework 
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
 
 [plugins]
 # Only if you later split builds or publish
 java-library = { id = "java-library" }
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+maven-publish = { id = "maven-publish" }
