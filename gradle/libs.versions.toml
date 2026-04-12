@@ -31,3 +31,4 @@ slf4j = "2.0.13"
 [plugins]
 # Only if you later split builds or publish
 java-library = { id = "java-library" }
+maven-publish = { id = "maven-publish" }
