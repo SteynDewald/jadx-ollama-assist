@@ -9,7 +9,9 @@ plugins {
 // group and version defined there
 
 repositories {
+    google()
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
