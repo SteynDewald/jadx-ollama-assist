@@ -33,7 +33,7 @@ jobs:
       uses: gradle/actions/setup-gradle@v4
 
     - name: Build, Test and Docs
-      run: ./gradlew test javadoc shadowJar --stacktrace
+      run: ./gradlew test javadoc shadowJar javadocJar --stacktrace
 
     # --- DEPLOY JAVADOCS TO GITHUB PAGES ---
     - name: Upload Pages Artifact
@@ -47,7 +47,7 @@ jobs:
 
     - name: Extract Version
       run: |
-        VERSION=$(./gradlew properties | grep ^version: | awk '{print $2}')
+        VERSION=$(grep 'projectVersion' gradle.properties | cut -d'=' -f2 | xargs)
         echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Publish to GitHub Packages
@@ -58,7 +58,7 @@ jobs:
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v${{ env }}
+        tag_name: v${{ env.PROJECT_VERSION }}
         name: "Release v${{ env.PROJECT_VERSION }}"
         body: |
           ## What's Changed
@@ -66,13 +66,12 @@ jobs:
           [View the Live API Documentation here](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/)
         draft: true
         files: |
-          build/libs/*-all.jar
-          build/libs/*-javadoc.jar
+          build/libs/jadx-ollama-assist-plugin-v${{ env.PROJECT_VERSION }}.jar
+          build/libs/jadx-ollama-assist-javadoc-v${{ env.PROJECT_VERSION }}.jar
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
  
     - name: Publish Release
-      run: gh release edit ${{ github.ref_name }} --draft=false
+      run: gh release edit v${{ env.PROJECT_VERSION }} --draft=false
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
-      
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
