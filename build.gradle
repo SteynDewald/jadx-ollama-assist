@@ -5,15 +5,12 @@ plugins {
     id 'jacoco'
 }
 
-// Versioning pulled from gradle.properties
-// group and version defined there
+// Ensure the project version is set from gradle.properties
+version = projectVersion
 
 dependencies {
-    // compileOnly dependencies are NOT included in fat jars by default
     compileOnly libs.jadx.core
-    
     implementation libs.tomlj
-
     testImplementation libs.junit.jupiter.api
     testRuntimeOnly libs.junit.jupiter.engine
 }
@@ -22,19 +19,34 @@ java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
     withSourcesJar()
-    withJavadocJar() // This automatically creates the JavaDoc JAR
+    withJavadocJar() 
 }
 
-// Configuration for the Fat Jar
+// --- Versioning & Naming Customization ---
+
+// 1. Configure the Fat Jar (Shadow)
 shadowJar {
-    archiveClassifier.set('all') // Names the file project-version-all.jar
-    mergeServiceFiles() // Essential if you use libraries with SPI
+    archiveBaseName.set("jadx-ollama-assist-plugin")
+    archiveVersion.set("v${project.version}")
+    archiveClassifier.set("") // Remove the "-all" suffix
+    mergeServiceFiles()
 }
+
+// 2. Configure the Javadoc Jar naming
+// Note: withJavadocJar() creates the task 'javadocJar'
+tasks.named('javadocJar') {
+    archiveBaseName.set("jadx-ollama-assist-javadoc")
+    archiveVersion.set("v${project.version}")
+    archiveClassifier.set("") // Remove the "-javadoc" suffix from the name
+}
+
+// 3. Disable the normal jar to prevent confusion
+jar.enabled = false
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            // Use the shadow jar instead of the normal jar
+            // Use the shadow jar as the main artifact
             artifact shadowJar
             artifact javadocJar
             artifact sourcesJar
@@ -57,7 +69,6 @@ publishing {
     }
 }
 
-// Ensure tests and docs are generated before publishing
 tasks.withType(PublishToMavenRepository) {
     dependsOn test, javadoc
 }
