@@ -25,7 +25,7 @@ java {
 shadowJar {
     archiveBaseName.set("jadx-ollama-assist-plugin")
     archiveVersion.set("v${project.version}")
-    archiveClassifier.set("") 
+    archiveClassifier.set("") // Use archiveClassifier.set instead of classifier
     mergeServiceFiles()
 }
 
