@@ -55,9 +55,8 @@ publishing {
             // manually defining exactly which files to upload. 
             // This is the safest way to avoid duplicates.
 
-            artifact shadowJar {
-                classifier = null // This makes it the main 'jadx-ollama-assist-plugin.jar'
-            }
+            artifact shadowJar
+
             
             artifact javadocJar
             artifact sourcesJar
